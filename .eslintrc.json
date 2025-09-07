@@ -1,14 +1,18 @@
 {
-  "extends": "next/core-web-vitals",
-  "rules": {
-    "@typescript-eslint/no-require-imports": "off",
-    "@typescript-eslint/no-unused-vars": "off"
-  },
   "ignorePatterns": [
-    "src/generated/**/*",
-    "**/generated/**/*",
-    "**/prisma/**/*",
-    "*.generated.ts",
-    "*.generated.js"
+    "**/generated/**",
+    "node_modules/",
+    ".next/",
+    "prisma/generated/"
+  ],
+  "overrides": [
+    {
+      "files": ["**/generated/**/*.js", "**/generated/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-require-imports": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    }
   ]
 }

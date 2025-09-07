@@ -1,12 +1,13 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { Button, Label, TextInput, HelperText } from "flowbite-react";
 import { HiCurrencyDollar, HiOutlineDocumentReport, HiOutlineColorSwatch } from "react-icons/hi";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { createApplication } from "@/actions/applications";
+import { createApplication, FormState } from "@/actions/applications";
 
 interface FormData {
   monthly_income: string;
@@ -17,15 +18,16 @@ interface FormData {
   occupancy_type: string;
 }
 
-const initialState = {
+const initialState: FormState = {
   message: "",
-  errors: {} as Record<string, string[]>,
-  data: {} as Partial<FormData>,
-  date: Date.now()
+  errors: {},
+  data: undefined,
+  date: 0
 };
 
 export function FormComponent() {
   const { t } = useTranslation();
+  const router = useRouter();
   const [state, formAction, isPending] = useActionState(createApplication, initialState);
   const [formData, setFormData] = useState<FormData>({
     monthly_income: "",
@@ -35,39 +37,58 @@ export function FormComponent() {
     property_value: "",
     occupancy_type: ""
   });
-  const [lastToastId, setLastToastId] = useState<string | number | null>(null);
+
+  const lastToastIdRef = useRef<string | number | null>(null);
 
   useEffect(() => {
     if (state.data) {
       setFormData(prev => ({
         ...prev,
-        ...state.data
+        monthly_income: state.data?.monthly_income?.toString() || "",
+        monthly_debts: state.data?.monthly_debts?.toString() || "",
+        loan_amount: state.data?.loan_amount?.toString() || "",
+        credit_score: state.data?.credit_score?.toString() || "",
+        property_value: state.data?.property_value?.toString() || "",
+        occupancy_type: state.data?.occupancy_type || ""
       }));
     }
   }, [state.data]);
 
+
+  useEffect(() => {
+    if (state.message?.includes('successfully') && state.data?.id) {
+      const timer = setTimeout(() => {
+        if (state.data?.id !== undefined) router.push(`/applications/${state.data.id}`);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [state.message, state.data?.id, router]);
+
+
   useEffect(() => {
     if (state.message) {
-
-      if (lastToastId) {
-        toast.dismiss(lastToastId);
+      if (lastToastIdRef.current) {
+        toast.dismiss(lastToastIdRef.current);
       }
 
       const toastType = state.message.includes('successfully') ? 'success' : 'error';
 
-      const newToastId = toast[toastType](state.message, {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "light",
-      });
+      if (toastType !== 'success') {
+        const newToastId = toast[toastType](state.message, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "light",
+        });
 
-      setLastToastId(newToastId);
+        lastToastIdRef.current = newToastId;
+      }
     }
-  }, [state.date]);
+  }, [state.message, state.date]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -76,7 +97,6 @@ export function FormComponent() {
       [name]: value
     }));
   };
-
 
   return (
     <div className="p-4 sm:p-6 xl:p-8">
@@ -248,7 +268,6 @@ export function FormComponent() {
           </div>
         </div>
       </form>
-
     </div>
   );
 }

@@ -1,26 +1,35 @@
 import Link from "next/link";
 import { Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
 import I18n from "./i18n";
-import Search from "./search";
 import { HiEye } from "react-icons/hi";
 
-type Props = {
-    data: any[],
-    attributes: string[],
+interface TableData {
+    id: string | number;
+    [key: string]: unknown;
+}
+
+type Props<T extends TableData> = {
+    data: T[],
+    attributes: (keyof T)[],
     locale: string
 }
 
-export default function CustomTable({ data, attributes, locale }: Props) {
+export default function CustomTable<T extends TableData>({ data, attributes, locale }: Props<T>) {
 
-    const formatCellValue = (value: any): React.ReactNode => {
+    const formatCellValue = (value: unknown): React.ReactNode => {
         if (value === null || value === undefined) return 'N/A';
 
         if (value instanceof Date) {
             return value.toLocaleDateString();
         }
 
-        if (typeof value === 'string' && !isNaN(Date.parse(value))) {
-            return new Date(value).toLocaleDateString();
+        if (typeof value === 'string') {
+            // Intentar parsear como fecha
+            const date = new Date(value);
+            if (!isNaN(date.getTime())) {
+                return date.toLocaleDateString();
+            }
+            return value;
         }
 
         if (typeof value === 'number') {
@@ -29,6 +38,18 @@ export default function CustomTable({ data, attributes, locale }: Props) {
 
         if (typeof value === 'boolean') {
             return value ? 'Yes' : 'No';
+        }
+
+        if (Array.isArray(value)) {
+            return value.map(item => String(item)).join(', ');
+        }
+
+        if (typeof value === 'object') {
+            try {
+                return JSON.stringify(value);
+            } catch {
+                return '[Object]';
+            }
         }
 
         return String(value);
@@ -41,8 +62,8 @@ export default function CustomTable({ data, attributes, locale }: Props) {
                     <TableHead>
                         <TableRow>
                             {attributes?.map(attr => (
-                                <TableHeadCell key={`th-${attr}`}>
-                                    <I18n text={`${locale}.${attr}`} />
+                                <TableHeadCell key={`th-${String(attr)}`}>
+                                    <I18n text={`${locale}.${String(attr)}`} />
                                 </TableHeadCell>
                             ))}
                             <TableHeadCell key="th-actions">
@@ -52,20 +73,20 @@ export default function CustomTable({ data, attributes, locale }: Props) {
                     </TableHead>
 
                     <TableBody className="divide-y">
-                        {data?.map((row: any) => (
+                        {data?.map((row) => (
                             <TableRow
-                                key={`tr-${row?.id || Math.random()}`}
+                                key={`tr-${row.id}`}
                                 className="bg-white dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
                             >
                                 {attributes?.map(attr => (
                                     <TableCell
-                                        key={`td-${row?.id}-${attr}`}
+                                        key={`td-${row.id}-${String(attr)}`}
                                         className="px-4 py-3"
                                     >
                                         {formatCellValue(row[attr])}
                                     </TableCell>
                                 ))}
-                                <TableCell key={`td-actions-${row?.id}`}>
+                                <TableCell key={`td-actions-${row.id}`}>
                                     <div className="flex space-x-2">
                                         <Link
                                             href={`/applications/${row.id}`}

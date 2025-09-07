@@ -3,31 +3,29 @@
 import {
   Badge,
   Accordion,
-  Avatar,
   AccordionPanel,
   AccordionTitle,
   AccordionContent,
   Button
 } from 'flowbite-react';
 import { HiDocument, HiEye } from 'react-icons/hi';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 
-type Props = {
-  data: any[],
-  attributes: string[],
-  locale: string,
+type MobileDataCardProps<T extends Record<string, unknown>> = {
+  data: T[];
+  attributes: (keyof T)[];
+  locale: string;
   title?: string;
   emptyMessage?: string;
   showIndex?: boolean;
   showId?: boolean;
-  idField?: string;
+  idField?: keyof T;
   formatValues?: boolean;
-  detailRoute?: string; // Nueva prop para la ruta de detalle
-}
+  detailRoute?: string;
+};
 
-export default function MobileDataCard({
+export default function MobileDataCard<T extends Record<string, unknown>>({
   data,
   attributes,
   locale,
@@ -35,14 +33,14 @@ export default function MobileDataCard({
   emptyMessage = "No se encontraron registros",
   showIndex = true,
   showId = true,
-  idField = "id",
+  idField = "id" as keyof T,
   formatValues = true,
-  detailRoute = "/applications" // Ruta por defecto
-}: Props) {
+  detailRoute = "/applications"
+}: MobileDataCardProps<T>) {
   const router = useRouter();
   const { t } = useTranslation();
 
-  const handleViewDetails = (id: string) => {
+  const handleViewDetails = (id: string | number) => {
     router.push(`${detailRoute}/${id}`);
   };
 
@@ -61,7 +59,7 @@ export default function MobileDataCard({
     <div className="md:hidden space-y-3">
       {data.map((row, index) => (
         <Accordion
-          key={row?.[idField] || index}
+          key={String(row?.[idField] ?? index)}
           collapseAll
           className="border border-gray-200 rounded-lg overflow-hidden dark:border-gray-700"
         >
@@ -80,7 +78,7 @@ export default function MobileDataCard({
                     </p>
                     {showId && row?.[idField] && (
                       <p className="text-xs text-gray-500 dark:text-gray-400">
-                        ID: {row[idField]}
+                        ID: {String(row[idField])}
                       </p>
                     )}
                   </div>
@@ -91,22 +89,21 @@ export default function MobileDataCard({
               <div className="space-y-3">
                 {attributes.map((attr) => (
                   <div
-                    key={`${row?.[idField]}-${attr}`}
+                    key={`${row?.[idField]}-${String(attr)}`}
                     className="flex justify-between items-start py-2 border-b border-gray-100 last:border-b-0 dark:border-gray-600"
                   >
                     <span className="text-sm font-medium text-gray-600 dark:text-gray-300 capitalize flex-shrink-0">
-                      {t(`${locale}.${attr}`)}:
+                      {t(`${locale}.${String(attr)}`)}:
                     </span>
                     <span className="text-sm text-gray-900 dark:text-white text-right ml-2 break-words max-w-[60%]">
-                      {formatValues ? formatValue(row[attr]) : row[attr]}
+                      {formatValues ? formatValue(row[attr]) : String(row[attr])}
                     </span>
                   </div>
                 ))}
 
-
                 <div className="pt-3 border-t border-gray-200 dark:border-gray-600">
                   <Button
-                    onClick={() => handleViewDetails(row[idField])}
+                    onClick={() => handleViewDetails(row[idField] as string | number)}
                     color="blue"
                     size="sm"
                     className="w-full flex items-center justify-center gap-2"
@@ -124,8 +121,7 @@ export default function MobileDataCard({
   );
 }
 
-
-export function formatValue(value: any): string {
+export function formatValue(value: unknown): string {
   if (value === null || value === undefined) return 'N/A';
   if (value instanceof Date) return value.toLocaleDateString();
   if (typeof value === 'string' && !isNaN(Date.parse(value)) && Date.parse(value) > 0) {

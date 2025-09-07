@@ -47,7 +47,7 @@ export default function Pagination({ totalPages, total_elements }: Props) {
     setSince(page > 1 ? ((page - 1) * currentSize) + 1 : 1);
     setSize(currentSize);
   }, [searchParams, totalPages, total_elements]);
-  console.log("eyyyy", { totalPages, total_elements, size, since, until });
+
 
   return (
     <div className="flex flex-col md:flex-row justify-between items-center mt-4 py-4 space-y-4 md:space-y-0">

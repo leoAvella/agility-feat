@@ -1,15 +1,20 @@
 import { ITableSearch } from "./table-search";
 
+
 export type LoadApplications = {
-  id?: number;
+  id: string;
   monthly_income: number;
   monthly_debts: number;
-  load_amount: number;
+  loan_amount: number;
   credit_score: number;
   property_value: number;
   occupancy_type: string;
-  reviewed?: boolean;
-  createdAt?: Date;
+  dti: number;
+  ltv: number;
+  decision: string;
+  reasons: string;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 

@@ -8,6 +8,9 @@ export type ITableSearch = {
     message?: string;
 }
 
-export type IDataTable = ITableSearch & { 
-    content: any[];
+export interface IDataTable<T = unknown> {
+  content: T[];
+  total_elements: number;
+  total_pages: number;
+  message?: string;
 }
