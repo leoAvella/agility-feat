@@ -1,0 +1,61 @@
+{
+  "ui": {
+    "sidebar": {
+      "links": {
+        "dashboard": "Dashboard",
+        "users": "Users",
+        "recolection": "Collection"
+      }
+    },
+    "data_table": {
+      "pagination": {
+        "page_size": "records per page",
+        "showing_rows": "Showing {{since}} to {{until}} of {{total_elements}} records"
+      }
+    },
+    "locales": {
+      "es": "Spanish",
+      "en": "English"
+    }
+  },
+  "routes": {
+    "title": "Home",
+    "applications": {
+      "title": "Applications",
+      "create": {
+        "title": "Create"
+      }
+    }
+  },
+  "pages": {
+    "applications": {
+      "attributes": {
+        "occupancy_type": "Occupancy Type",
+        "property_value": "Property Value",
+        "loan_amount": "Loan Amount",
+        "credit_score": "Credit Score",
+        "monthly_income": "Monthly Income",
+        "monthly_debts": "Monthly Debts",
+        "decision": "Decision",
+        "reasons": "Reasons",
+        "dti": "DTI",
+        "ltv": "LTV",
+        "id": "ID",
+        "created_at": "Created At",
+        "updated_at": "Updated At",
+        "actions": "Actions"
+      },
+      "sections": {
+        "application_details": "Application Details",
+        "applicant_information": "Applicant Information",
+        "credit_information": "Credit Information",
+        "underwriting_result": "Underwriting Result"
+      }
+    }
+  },
+  "general": {
+    "loading": "Loading...",
+    "no_data": "No data available",
+    "view_details": "View Details"
+  }
+}

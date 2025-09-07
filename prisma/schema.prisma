@@ -1,0 +1,28 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model LoadApplications {
+  id             String   @id @default(cuid())
+  monthly_income Float
+  monthly_debts  Float
+  loan_amount    Float
+  property_value Float
+  credit_score   Int
+  occupancy_type String
+  dti            Float
+  ltv            Float
+  decision       String
+  reasons        String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}

@@ -1,36 +1,120 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mortgage Underwriting System
 
-## Getting Started
+A modern React/Next.js application for mortgage loan underwriting decisions. The system calculates Debt-to-Income (DTI) and Loan-to-Value (LTV) ratios to automatically determine loan eligibility based on configurable business rules.
 
-First, run the development server:
+## 🚀 Features
+
+- **Loan Application Management**: Create and review mortgage applications
+- **Automated Underwriting**: Real-time DTI and LTV calculations
+- **Decision Engine**: Automated Approve/Refer/Decline decisions with reasoning
+- **Responsive Design**: Mobile-first design with Flowbite React components
+- **Bilingual Support**: English and Spanish language support
+- **Real-time Validation**: Form validation with user-friendly error messages
+- **Application History**: View past applications with detailed results
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 14+ with React 18+
+- **Styling**: Tailwind CSS with Flowbite React components
+- **Database**: SQLite with Prisma ORM
+- **Internationalization**: react-i18next
+- **TypeScript**: Full type safety
+- **Validation**: Zod schema validation
+
+## 📋 Business Rules
+
+The system evaluates applications based on:
+
+### Approve Conditions:
+- DTI ≤ 0.43 (43%)
+- LTV ≤ 0.80 (80%)
+- FICO Score ≥ 680
+
+### Refer Conditions (Manual Review):
+- DTI ≤ 0.50 (50%)
+- LTV ≤ 0.95 (95%) 
+- FICO Score ≥ 660
+
+### Decline Conditions:
+- Any criteria outside above ranges
+
+## 🏗️ Project Structure
+# Mortgage Underwriting System
+
+A modern React/Next.js application for mortgage loan underwriting decisions. The system calculates Debt-to-Income (DTI) and Loan-to-Value (LTV) ratios to automatically determine loan eligibility based on configurable business rules.
+
+## 🚀 Features
+
+- **Loan Application Management**: Create and review mortgage applications
+- **Automated Underwriting**: Real-time DTI and LTV calculations
+- **Decision Engine**: Automated Approve/Refer/Decline decisions with reasoning
+- **Responsive Design**: Mobile-first design with Flowbite React components
+- **Bilingual Support**: English and Spanish language support
+- **Real-time Validation**: Form validation with user-friendly error messages
+- **Application History**: View past applications with detailed results
+- **RESTful API**: Complete API for application management
+- **Type Safety**: Full TypeScript implementation
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 15+ with React 18+
+- **Styling**: Tailwind CSS with Flowbite React components
+- **Database**: SQLite with Prisma ORM
+- **Internationalization**: react-i18next
+- **Validation**: Zod schema validation
+- **Language**: TypeScript
+- **Build Tool**: Turbopack (optional)
+
+## 📋 Business Rules
+
+The system evaluates applications based on configurable thresholds:
+
+### Approve Conditions:
+- **DTI** ≤ 0.43 (43%)
+- **LTV** ≤ 0.80 (80%) 
+- **FICO Score** ≥ 680
+
+### Refer Conditions (Manual Review):
+- **DTI** ≤ 0.50 (50%)
+- **LTV** ≤ 0.95 (95%)
+- **FICO Score** ≥ 660
+
+### Decline Conditions:
+- Any criteria outside above ranges
+
+## 🚦 Getting Started
+
+### Prerequisites
+
+Ensure you have the following installed on your system:
+
+- **Node.js** 18.17 or later
+- **npm** 9.0 or later
+- **Git**
+
+### Installation Steps
+
+#### 1. Clone the Repository
 
 ```bash
+git clone <your-repo-url>
+cd agility-feat
+
+# Using npm
+npm install
+
+# Or using yarn
+yarn install
+
+
+# Generate Prisma client
+npx prisma generate
+
+# Run initial migration
+npx prisma migrate dev --name init
+
+# Optional: Seed database with sample data
+npx prisma db seed
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

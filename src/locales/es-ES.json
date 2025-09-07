@@ -1,0 +1,62 @@
+{
+    "ui":{
+        "sidebar":{
+            "links":{
+                "dashboard":"Dashboard",
+                "users":"Usuarios",
+                "recolection": "Recolección"
+            }
+        },
+        "data_table":{
+            "pagination":{
+                "page_size":"registros por página",
+                "showing_rows":"Viendo {{since}} a {{until}} de {{total_elements}} registros"
+            }
+        },
+        "locales":{
+            "es":"Español",
+            "en": "Ingles"
+        }
+    },
+    "routes":{   
+            "title": "Home",
+            "applications":{
+                "title": "Aplicaciones",
+                "create": {
+                    "title": "Crear"
+                }
+            }       
+    },
+    "pages":{
+        "applications":{
+            "attributes":{
+                "occupancy_type":"Tipo de ocupación",
+                "property_value":"Valor de la propiedad",
+                "loan_amount":"Monto del préstamo",
+                "credit_score":"Puntaje de crédito",
+                "monthly_income":"Ingreso mensual",
+                "monthly_debts":"Deudas mensuales",
+                "decision":"Decisión",
+                "reasons":"Razones",
+                "dti":"DTI",
+                "ltv":"LTV",
+                "id":"ID",
+                "created_at":"Creado en",
+                "updated_at":"Actualizado en",
+                "actions":"Acciones"
+            },
+            "sections":{
+                "application_details":"Detalles de la aplicación",
+                "applicant_information":"Información del Solicitante",
+                "credit_information":"Información Crediticia",
+                "underwriting_result":"Resultado de la suscripción"
+            }
+
+        }
+    },
+    "general":{
+        "loading":"Cargando...",
+        "no_data":"No hay datos disponibles",
+        "view_details":"Ver detalles"
+    }
+}

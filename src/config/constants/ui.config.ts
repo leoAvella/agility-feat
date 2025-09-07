@@ -1,0 +1,1 @@
+export const OPTIONS_SIZE_PAGE: number[] = [10,20,50];
