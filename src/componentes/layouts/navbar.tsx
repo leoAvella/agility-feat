@@ -15,7 +15,6 @@ export default function Header() {
       </NavbarBrand>
       <div className="flex md:order-2">
         <Button color="secondary">Get started</Button>
-        <NavbarToggle />
       </div>
       <NavbarToggle />
       <NavbarCollapse>
