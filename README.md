@@ -108,7 +108,7 @@ NEXT_PUBLIC_CREDIT_SCORE_REFER=660
 #### 1. Clone the Repository
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/leoAvella/agility-feat.git
 cd agility-feat
 
 # Using npm
