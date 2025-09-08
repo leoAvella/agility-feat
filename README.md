@@ -92,6 +92,17 @@ Ensure you have the following installed on your system:
 - **npm** 9.0 or later
 - **Git**
 
+### example .en.local 
+
+NEXT_PUBLIC_DTI_APPROVE=0.43
+NEXT_PUBLIC_DTI_REFER=0.50
+NEXT_PUBLIC_LTV_APPROVE=0.80
+NEXT_PUBLIC_LTV_REFER=0.95
+NEXT_PUBLIC_CREDIT_SCORE_APPROVE=680
+NEXT_PUBLIC_CREDIT_SCORE_REFER=660
+
+
+
 ### Installation Steps
 
 #### 1. Clone the Repository
